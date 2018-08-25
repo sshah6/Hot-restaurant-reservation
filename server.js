@@ -39,7 +39,7 @@ var waitlist = [
 // Basic route that sends the user first to the AJAX Page
 
 // Add reservation
-app.get("/add", function (req, res) {
+app.post("/add", function (req, res) {
     // Store post body as new table object
     var newTable = req.body;
     // Create empty response object
