@@ -29,7 +29,7 @@ var waitlist = [
         name: "test name",
         phone: "555-555-5555",
         email: "test email",
-        id: 101
+        id: 102
     }
 ];
 
@@ -41,7 +41,22 @@ var waitlist = [
 // Add reservation
 app.get("/add", function (req, res) {
     //logic to add reservation
-    console.log("Add reservation logic");
+    var newTable = req.body;
+    var response = {};
+    if (reservations.length < 5) {
+        ///
+        reservations.push(newTable);
+        response.type = "reservation";
+        response.data = reservations;
+    }
+
+    else {
+        waitlist.push(newTable);
+        response.type = "waitlist";
+        response.data = waitlist;
+    }
+    res.json(response);
+    //console.log("Add reservation logic");
 });
 
 // View reservations
@@ -59,7 +74,7 @@ app.get("/view/waitlist", function (req, res) {
 // Clear all reservations and waitlist
 app.get("/clear", function (req, res) {
     reservations = [];
-    waitlist = [];    
+    waitlist = [];  
 });
 
 
