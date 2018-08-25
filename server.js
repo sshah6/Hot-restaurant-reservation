@@ -40,41 +40,40 @@ var waitlist = [
 
 // Add reservation
 app.get("/add", function (req, res) {
-    //logic to add reservation
+    // Store post body as new table object
     var newTable = req.body;
+    // Create empty response object
     var response = {};
-    if (reservations.length < 5) {
-        ///
+
+    if (reservations.length <= 5) {
         reservations.push(newTable);
         response.type = "reservation";
         response.data = reservations;
     }
-
     else {
         waitlist.push(newTable);
         response.type = "waitlist";
         response.data = waitlist;
     }
+    // Send resonse object
     res.json(response);
-    //console.log("Add reservation logic");
 });
 
 // View reservations
 app.get("/view/reservations", function (req, res) {
-    //logic to view reservation
     res.json(reservations);
 });
 
 // View waitlist
 app.get("/view/waitlist", function (req, res) {
-    //logic to view waitlist
     res.json(waitlist);
 });
 
 // Clear all reservations and waitlist
 app.get("/clear", function (req, res) {
     reservations = [];
-    waitlist = [];  
+    waitlist = [];
+    res.send("success");
 });
 
 
