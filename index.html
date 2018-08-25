@@ -18,14 +18,22 @@
   <div class="container">
 
     <div class="jumbotron">
-      <h1 class="text-center"><span class="fa fa-fire"></span> Hot Restaurant</h1>
+      <h1 class="text-center">
+        <span class="fa fa-fire"></span> Hot Restaurant</h1>
       <hr>
       <h2 class="text-center">Current Reservations and Waiting List</h2>
       <br>
 
       <div class="text-center">
-        <a href="/reserve"><button class="btn btn-lg btn-danger"><span class="fa fa-credit-card"></span> Make Reservation</button></a>
-        <a href="/"><button class="btn btn-lg btn-default"><span class="fa fa-home"></span></button></a>
+        <a href="/reserve">
+          <button class="btn btn-lg btn-danger">
+            <span class="fa fa-credit-card"></span> Make Reservation</button>
+        </a>
+        <a href="/">
+          <button class="btn btn-lg btn-default">
+            <span class="fa fa-home"></span>
+          </button>
+        </a>
       </div>
     </div>
 
@@ -58,8 +66,10 @@
     <footer class="footer mt-4">
       <div class="container">
         <p>Control Panel</p>
-        <p><a href="#" id="clear">Clear Table</a> | <a href="/view/reservations">API Table Link</a> | <a href="/view/waitlist">API
-            Wait List</a>
+        <p>
+          <a href="#" id="clear">Clear Table</a> |
+          <a href="/view/reservations">API Table Link</a> |
+          <a href="/view/waitlist">API Wait List</a>
       </div>
     </footer>
 
@@ -74,80 +84,76 @@
   // In this code, jQuery is used to "download" the data from our server
   // We then dynamically display this content in our table. This is very similar to the group projects you just completed.
   // It's also very similar to the NYT search application. In fact, I copied a ton of code from there.
-  
+
   // Data from HTML
   var reservation = [
     {
-      id: id, 
+      id: id,
       name: name,
       number: number,
       email: email
     }
   ]
-    // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
-    $.ajax({ url:"/view/reservations", method:"GET"})
-      .then(function(res){
-        // Here we then log the tableData to console, where it will show up as an object.
-        console.log(res);
-        console.log("------------------------------------");
-        // Loop through and display each of the customers
-        for (var i = 0; i < res.length; i++) {
-          // Get a reference to the tableList element and populate it with tables
-          var tableList = $("#tableList");
-          // Then display the fields in the HTML (Section Name, Date, URL)
-          var listItem = $("<li class='list-group-item mt-4'>");
-          listItem.append(
-            $("<h2>").text("Table #" + (i + 1)),
-            $("<hr>"),
-            $("<h2>").text("ID: " + res[i].id),
-            $("<h2>").text("Name: " + res[i].name),
-            $("<h2>").text("Email: " + res[i].email),
-            $("<h2>").text("Phone: " + res[i].phone)
-          );
-          tableList.append(listItem);
-        }
-      });
 
-  
-    // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
-    $.ajax({ url: "/view/waitlist", method:"GET"})
-       .then(function (res) {
-        // Log the res to console, where it will show up as an object.
-        console.log(res);
-        console.log("------------------------------------");
-        // Loop through and display each of the customers
-        for (var i = 0; i < res.length; i++) {
-          // Get a reference to the waitList element and populate it with tables
-          var waitList = $("#waitList");
-          // Then display the fields in the HTML (Section Name, Date, URL)
-          var listItem = $("<li class='list-group-item mt-4'>");
-          listItem.append(
-            $("<h2>").text("Table #" + (i + 1)),
-            $("<hr>"),
-            $("<h2>").text("ID: " + res[i].id),
-            $("<h2>").text("Name: " + res[i].name),
-            $("<h2>").text("Email: " + res[i].email),
-            $("<h2>").text("Phone: " + res[i].phone)
-          );
-          waitList.append(listItem);
-        }
-      });
-    
-      function populateTable(){
-        //Populate the tables
-        
-      }
-    // Clear the tables on the server and then empty the elements on the client
-    $.ajax({ url: "/clear", method:"GET"})
-      .then(function (res) {
-      alert("Clearing Reservations...");
-      $("#waitlist").empty();
-      $("tableList").empty();
+  var listItem = $("<li class='list-group-item mt-4'>");
+
+  // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
+  $.ajax({ url: "/view/reservations", method: "GET" })
+    .then(function (res) {
+      // Here we then log the tableData to console, where it will show up as an object.
+      console.log(res);
+      console.log("------------------------------------");
+        // Get a reference to the tableList element and populate it with tables
+        var tableList = $("#tableList");
+        // Then display the fields in the HTML (Section Name, Date, URL)
+        //tableList = populateList(res);
+        populateList(res);
+        tableList.append(listItem);
     });
-    
-    // Add information on the current form to the tables. 
-    $.ajax({ url: "/add", method: "POST"})
-      .then(function(req,res){
+
+
+  // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
+  $.ajax({ url: "/view/waitlist", method: "GET" })
+    .then(function (res) {
+      // Log the res to console, where it will show up as an object.
+      console.log(res);
+      console.log("------------------------------------");
+      // Get a reference to the waitList element and populate it with tables
+      var waitList = $("#waitList");
+      // Then display the fields in the HTML (Section Name, Date, URL)
+      //waitList = populateList(res);
+      populateList(res);
+      waitList.append(listItem);
+    });
+
+  function populateList(resArray) {
+    for (var i = 0; i < resArray.length; i++) {
+      // Then display the fields in the HTML (Section Name, Date, URL)
+      listItem.append(
+        $("<h2>").text("Table #" + (i + 1)),
+        $("<hr>"),
+        $("<h2>").text("ID: " + resArray[i].id),
+        $("<h2>").text("Name: " + resArray[i].name),
+        $("<h2>").text("Email: " + resArray[i].email),
+        $("<h2>").text("Phone: " + resArray[i].phone)
+      );
+    }
+    //return listItem;
+  }
+
+  // Clear the tables on the server and then empty the elements on the client
+  $.ajax({ url: "/clear", method: "GET" })
+    .then(function (res) {
+      if (res === "success") {
+        alert("Clearing Reservations...");
+        $("#waitlist").empty();
+        $("tableList").empty();
+      }
+    });
+
+  // Add information on the current form to the tables. 
+  $.ajax({ url: "/add", method: "POST" })
+    .then(function (req, res) {
       var newReservation = req.body;
       console.log(newReservation);
       reservation.push(newReservation);
