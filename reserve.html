@@ -25,11 +25,11 @@
       <br>
 
       <div class="text-center">
-        <a href="./tables.html">
+        <a href="./tables">
           <button type="button" class="btn btn-lg btn-primary">
             <span class="glyphicon glyphicon-list-alt"></span> View Tables</button>
         </a>
-        <a href="./index.html">
+        <a href="./index">
           <button class="btn btn-lg btn-default">
             <span class="fa fa-home"></span>
           </button>
@@ -106,8 +106,8 @@
   $.ajax({ url: HOST + "/view/reservations", method: "GET" })
     .then(function (res) {
       // Here we then log the tableData to console, where it will show up as an object.
-      console.log(res);
-      console.log("------------------------------------");
+      //console.log(res);
+      //console.log("------------------------------------");
       // Get a reference to the tableList element and populate it with tables
       var tableList = $("#tableList");
       // Then display the fields in the HTML (Section Name, Date, URL)
@@ -121,8 +121,8 @@
   $.ajax({ url: HOST + "/view/waitlist", method: "GET" })
     .then(function (res) {
       // Log the res to console, where it will show up as an object.
-      console.log(res);
-      console.log("------------------------------------");
+      //console.log(res);
+      //console.log("------------------------------------");
       // Get a reference to the waitList element and populate it with tables
       var waitList = $("#waitList");
       // Then display the fields in the HTML (Section Name, Date, URL)

@@ -22,8 +22,8 @@
 			<br>
 
 			<div class="text-center">
-				<a href="./reserve.html"><button type="button" class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-credit-card"></span> Make Reservation</button></a>
-				<a href="./index.html"><button type="button" class="btn btn-lg btn-default"><span class="glyphicon glyphicon-home"></span></button></a>
+				<a href="./reserve"><button type="button" class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-credit-card"></span> Make Reservation</button></a>
+				<a href="./index"><button type="button" class="btn btn-lg btn-default"><span class="glyphicon glyphicon-home"></span></button></a>
 			</div>
 		</div>
 
@@ -71,10 +71,10 @@
     // Data from HTML
     var reservation = [
       {
-        id: id,
-        name: name,
-        number: number,
-        email: email
+        id: $("reserve_id").val(),
+        name: $("reserve_name").val(),
+        number: $("reserve_number").val(),
+        email: $("reserve_email").val()
       }
     ]
   
@@ -85,7 +85,7 @@
       .then(function (res) {
         // Here we then log the tableData to console, where it will show up as an object.
         console.log(res);
-        console.log("------------------------------------");
+        //console.log("------------------------------------");
           // Get a reference to the tableList element and populate it with tables
           var tableList = $("#tableList");
           // Then display the fields in the HTML (Section Name, Date, URL)
@@ -100,7 +100,7 @@
       .then(function (res) {
         // Log the res to console, where it will show up as an object.
         console.log(res);
-        console.log("------------------------------------");
+        //console.log("------------------------------------");
         // Get a reference to the waitList element and populate it with tables
         var waitList = $("#waitList");
         // Then display the fields in the HTML (Section Name, Date, URL)
