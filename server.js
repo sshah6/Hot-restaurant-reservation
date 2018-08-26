@@ -35,46 +35,57 @@ var waitlist = [
 
 // Routes
 // =============================================================
+app.get("/tables", function(req, res) {
+    res.sendFile(path.join(__dirname, "./tables.html"));
+  });
+
+  app.get("/reserve", function(req, res) {
+    res.sendFile(path.join(__dirname, "./reserve.html"));
+  });
+
+  // If no matching route is found default to home
+  app.get("*", function(req, res) {
+    res.sendFile(path.join(__dirname, "./index.html"));
+  });
 
 // Basic route that sends the user first to the AJAX Page
 
 // Add reservation
-app.get("/add", function (req, res) {
-    //logic to add reservation
+app.post("/add", function (req, res) {
+    // Store post body as new table object
     var newTable = req.body;
+    // Create empty response object
     var response = {};
-    if (reservations.length < 5) {
-        ///
+
+    if (reservations.length <= 5) {
         reservations.push(newTable);
         response.type = "reservation";
         response.data = reservations;
     }
-
     else {
         waitlist.push(newTable);
         response.type = "waitlist";
         response.data = waitlist;
     }
+    // Send resonse object
     res.json(response);
-    //console.log("Add reservation logic");
 });
 
 // View reservations
 app.get("/view/reservations", function (req, res) {
-    //logic to view reservation
     res.json(reservations);
 });
 
 // View waitlist
 app.get("/view/waitlist", function (req, res) {
-    //logic to view waitlist
     res.json(waitlist);
 });
 
 // Clear all reservations and waitlist
 app.get("/clear", function (req, res) {
     reservations = [];
-    waitlist = [];  
+    waitlist = [];
+    res.send("success");
 });
 
 
